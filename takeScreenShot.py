@@ -15,7 +15,7 @@ Outputs: A string
 Logic: Take a screenshot of a certain area. Process the image and return.
 '''
 def scMoney():
-    pyautogui.screenshot('screenshots\screenshotMoney.jpg', region=(362,20, 150, 40)) # left, top, width, and height
+    pyautogui.screenshot('screenshots\screenshotMoney.jpg', region=(362,20, 170, 40)) # left, top, width, and height
     return processImage('screenshots\screenshotMoney.jpg', "1")
 
 def scLives():
@@ -23,7 +23,7 @@ def scLives():
     return processImage('screenshots\screenshotLives.jpg', "2")
 
 def scRound():
-    pyautogui.screenshot('screenshots\screenshotRound.jpg', region=(1450, 32, 110, 50))
+    pyautogui.screenshot('screenshots\screenshotRound.jpg', region=(1400, 32, 110, 50))
     return processImage('screenshots\screenshotRound.jpg', "3").split('/')
 
 '''
@@ -42,5 +42,3 @@ Logic: Take a screenshot of a certain area. Compare that image to another image 
 def scCurrent():
     pyautogui.screenshot('screenshots\screenshotCurrent.jpg', region=(1800, 970, 75, 50))
     return(open("screenshots\screenshotCurrent.jpg","rb").read() != open("screenshots\compareCurrent.jpg","rb").read())
-
-

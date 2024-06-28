@@ -57,20 +57,21 @@ def processImage(process_This, numb):
     processed_image_path = "screenshots/strippedImage" + numb +".jpg" # save stripped image for debugging purposes
     cv2.imwrite(processed_image_path, no_noise) # write to the saved image
 
-    myconfig = r"--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/" # Tesseract configuration for reading numbers and / for the rounds
+    myconfig = r"--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/," # Tesseract configuration for reading numbers and / for the rounds
 
     data = pytesseract.image_to_string(no_noise, lang='eng', config=myconfig) # extract text using Tesseract
 
     # Filter text by confidence
     returnThis = ""
     data_dict = pytesseract.image_to_data(no_noise, config=myconfig, output_type=Output.DICT)
-   
+    
     # loops through the gathered data, and checks for the confidence level
     for i in range(len(data_dict['text'])):
         if float(data_dict['conf'][i]) > 5:
             if(numb != "3"): # if not rounds, then get rid of everything that is not a digit
-                if data_dict['text'][i].isdigit():
-                    returnThis += data_dict['text'][i]
+                for ch in data_dict['text'][i]:
+                    if ch.isdigit():
+                        returnThis += ch
             else: # if it is rounds, then keep the '/' and splice it out later
                 returnThis += data_dict['text'][i]
     return returnThis

@@ -1,4 +1,3 @@
-import random
 import keyboard
 from monkeys import Monkey
 from pyautogui import *
@@ -7,15 +6,19 @@ from takeScreenShot import scMoney
 
 def buy(x, y, tower: Monkey):
     try:
+        print("here")
         money = scMoney()
         keyboard.press_and_release(tower.keybind)
         pyautogui.click(x, y)
+        pyautogui.click(x, y)
+        pyautogui.sleep(0.25)
         if(scMoney() == money):
+            keyboard.press_and_release('esc')
             return False
+        pyautogui.click(1623, 1079)
         return True
     except:
         return False
 
-ninja = Monkey("Ninja", 430, 'd')
-sleep(3)
-print(buy(380, 318, ninja))
+def startRound():
+    keyboard.press_and_release(' ')
