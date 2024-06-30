@@ -31,14 +31,16 @@ class GUIApp:
     def update_info(self):
         if not self.is_running: # checks if it is supposed to run
             return
+        
         if not scCurrent(): # checks so that it only updates when the round is over
             # update the label with all pieces of information
             # all of these call functions in takeScreenShot.py
-            
+            print("bruh")
             for i in range(5):
                 self.money = scMoney()
                 if(self.money != ""):
                     randomAction(self.money)
+                    pyautogui.sleep(4)
                     break
                 print("failed to read money")
             self.money = scMoney()
