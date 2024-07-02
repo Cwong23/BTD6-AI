@@ -16,7 +16,7 @@ class PlacedMonkey:
 
     def upgradeM(self, upgradePath: int, money: int):
         pathCheck = 0
-       
+        print("there")
         # check if the upgrade is possible
         for i,x in enumerate(self.currentUpgrade):
             if x != 0:
@@ -27,17 +27,17 @@ class PlacedMonkey:
        
         if (self.currentUpgrade[upgradePath] == 0) and (pathCheck == 2):
             return False
-        
+        print("here")
         # money check
-        
-        if((upgradePath*5)+self.currentUpgrade[upgradePath] > money): 
+        print((upgradePath*5)+self.currentUpgrade[upgradePath])
+        if(self.monkey.upgrades[(upgradePath*5)+self.currentUpgrade[upgradePath]] > money): 
             
             return False
-       
+        print("Cost: " + str(self.monkey.upgrades[(upgradePath*5)+self.currentUpgrade[upgradePath]]))
         return True
     
     def __str__(self) -> str:
-        rStr = self.monkey.name + " X: " + str(self.x) + " Y: " + str(self.y)
+        rStr = self.monkey.name + " X: " + str(self.x) + " Y: " + str(self.y) + " Upgrades: " + str(self.currentUpgrade[0]) + str(self.currentUpgrade[1]) + str(self.currentUpgrade[2])
         return rStr
 
 monkey_dict = {

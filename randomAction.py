@@ -31,10 +31,15 @@ def randomAction(money):
    
     elif(y==2):
         p = random.randint(0,2)
-        print("Upgrading ", p)
+        print("Upgrade Path ", p)
         
         if(len(current_monkeys) != 0):
             z = random.randint(0, len(current_monkeys)-1)
+            print("Monkey Chosen: ")
             print(current_monkeys[z])
             upgrade(current_monkeys[z], p)
+            print("Monkey Now: ")
+            print(current_monkeys[z])
+        else:
+            print("failed to upgrade")
     

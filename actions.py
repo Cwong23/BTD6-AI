@@ -14,48 +14,63 @@ def buy(x, y, tower: Monkey):
         pyautogui.sleep(0.25)
         
         if(scMoney() == money):
-            keyboard.press_and_release('esc')
-            pyautogui.sleep(0.25)
-            pyautogui.click(1623, 1079)
+            reset()
             return False
-        pyautogui.click(1623, 1079)
+        reset()
         temp = PlacedMonkey(tower, x, y)
         current_monkeys.append(temp)
         
-        print("Vro")
+        
         return True
     except:
-        print("Something went wrong")
-        pyautogui.click(1623, 1079)
+        print("Buy failed")
+        reset()
         return False
 
 def startRound():
     keyboard.press_and_release(' ')
 
+def restart():
+    pyautogui.click(850, 775)
+    pyautogui.sleep(0.25)
+    pyautogui.click(1115, 718)
+
+def reset():
+    pyautogui.sleep(0.15)
+    keyboard.press_and_release('esc')
+    pyautogui.sleep(0.15)
+    pyautogui.click(1623, 1079)
+
+# work on upgrade math
+
 def upgrade(tower: PlacedMonkey, upgrade: int):
     try:
+        pyautogui.sleep(0.5)
         money = int(scMoney())
-        
-        print(tower.upgradeM(upgrade, money))
+        print("check 1")
         if(tower.upgradeM(upgrade, money)):
-            
+            print("check 2")
             pyautogui.click(tower.x, tower.y)
             pyautogui.sleep(0.25)
             keyboard.press_and_release(tower.monkey.upgradeKeybinds[upgrade])
-            pyautogui.sleep(0.25)
-            if(int(scMoney()) == money):
-                
-                keyboard.press_and_release('esc')
-                return False
-            pyautogui.click(1623, 1079)
-            tower.currentUpgrade[upgrade]+=1
-            pyautogui.click(1623, 1079)
-            return True
-        pyautogui.click(1623, 1079)
+            reset()
+            for i in range(5):
+                money2 = scMoney()
+                if(money2 != ""):
+                    if(int(money2) == money):
+                        reset()
+                        return False
+                    reset()
+                    tower.currentUpgrade[upgrade]+=1
+                    return True 
+                print("failed to read money")
+        reset()
         return False
     except:
-        pyautogui.click(1623, 1079)
+        reset()
+        print("Upgrade failed")
         return False
+    
 '''
 pyautogui.sleep(2)
 d = PlacedMonkey(monkey_dict['ninja'], 349, 218)
@@ -71,5 +86,11 @@ pyautogui.sleep(1)
 buy(400, 300, monkey_dict["ninja"])
 upgrade(current_monkeys[0], 1)
 print(current_monkeys[0])
+
+
+pyautogui.sleep(1)
+buy(400, 300, monkey_dict["ninja"])
+print(upgrade(current_monkeys[0], 0))
 '''
+
 

@@ -35,7 +35,7 @@ class GUIApp:
         if not scCurrent(): # checks so that it only updates when the round is over
             # update the label with all pieces of information
             # all of these call functions in takeScreenShot.py
-            print("bruh")
+
             for i in range(5):
                 self.money = scMoney()
                 if(self.money != ""):
