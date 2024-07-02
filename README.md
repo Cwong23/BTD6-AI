@@ -13,3 +13,5 @@ The program will use image processing AI to gather the necessary information on 
 References:
 https://www.youtube.com/watch?v=PY_N1XdFp4w&t=627s&ab_channel=NeuralNine 
 https://www.geeksforgeeks.org/create-first-gui-application-using-python-tkinter/#
+https://pytorch.org/tutorials/beginner/basics/buildmodel_tutorial.html 
+https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html 
