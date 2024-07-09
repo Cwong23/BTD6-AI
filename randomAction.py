@@ -8,10 +8,10 @@ def randomAction(money):
     if(y==1):
         if(x==1):
             print("Placing Ninja")
-            monkeyToPlace = monkey_dict["ninja"]
+            monkeyToPlace = monkey_dict[1]
         else:
             print("Placing Bomb")
-            monkeyToPlace = monkey_dict["bomb"]
+            monkeyToPlace = monkey_dict[2]
 
         if(int(money) >= monkeyToPlace.price):
             

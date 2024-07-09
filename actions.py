@@ -4,7 +4,7 @@ from pyautogui import *
 import pyautogui
 from takeScreenShot import scMoney
 
-def buy(x, y, tower: Monkey):
+def buy(x: int, y: int, tower: Monkey) -> bool:
     try:
         
         money = scMoney()
@@ -14,9 +14,9 @@ def buy(x, y, tower: Monkey):
         pyautogui.sleep(0.25)
         
         if(scMoney() == money):
-            reset()
+            resetGame()
             return False
-        reset()
+        resetGame()
         temp = PlacedMonkey(tower, x, y)
         current_monkeys.append(temp)
         
@@ -24,7 +24,7 @@ def buy(x, y, tower: Monkey):
         return True
     except:
         print("Buy failed")
-        reset()
+        resetGame()
         return False
 
 def startRound():
@@ -35,7 +35,7 @@ def restart():
     pyautogui.sleep(0.25)
     pyautogui.click(1115, 718)
 
-def reset():
+def resetGame():
     pyautogui.sleep(0.15)
     keyboard.press_and_release('esc')
     pyautogui.sleep(0.15)
@@ -43,7 +43,7 @@ def reset():
 
 # work on upgrade math
 
-def upgrade(tower: PlacedMonkey, upgrade: int):
+def upgrade(tower: PlacedMonkey, upgrade: int) -> bool:
     try:
         pyautogui.sleep(0.5)
         money = int(scMoney())
@@ -53,21 +53,21 @@ def upgrade(tower: PlacedMonkey, upgrade: int):
             pyautogui.click(tower.x, tower.y)
             pyautogui.sleep(0.25)
             keyboard.press_and_release(tower.monkey.upgradeKeybinds[upgrade])
-            reset()
+            resetGame()
             for i in range(5):
                 money2 = scMoney()
                 if(money2 != ""):
                     if(int(money2) == money):
-                        reset()
+                        resetGame()
                         return False
-                    reset()
+                    resetGame()
                     tower.currentUpgrade[upgrade]+=1
                     return True 
                 print("failed to read money")
-        reset()
+        resetGame()
         return False
     except:
-        reset()
+        resetGame()
         print("Upgrade failed")
         return False
     
