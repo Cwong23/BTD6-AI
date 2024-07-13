@@ -16,15 +16,24 @@ Logic: Take a screenshot of a certain area. Process the image and return.
 '''
 def scMoney():
     pyautogui.screenshot('screenshots\screenshotMoney.jpg', region=(365,24, 170, 40)) # left, top, width, and height
-    return processImage('screenshots\screenshotMoney.jpg', "1")
+    x = processImage('screenshots\screenshotMoney.jpg', "1")
+    if x == '':
+        return '-1'
+    return x
 
 def scLives():
     pyautogui.screenshot('screenshots\screenshotLives.jpg', region=(139, 20, 100, 40))
-    return processImage('screenshots\screenshotLives.jpg', "2")
+    x = processImage('screenshots\screenshotLives.jpg', "2")
+    if x == '':
+        return '-1'
+    return x
 
 def scRound():
     pyautogui.screenshot('screenshots\screenshotRound.jpg', region=(1420, 32, 140, 50))
-    return processImage('screenshots\screenshotRound.jpg', "3").split('/')
+    x = processImage('screenshots\screenshotRound.jpg', "3").split('/')
+    if x[0] == '':
+        return ['-1']
+    return x
 
 
 

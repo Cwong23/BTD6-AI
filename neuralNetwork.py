@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 from collections import namedtuple, deque
 from itertools import count
 import numpy
-import gym
-from gym import spaces
+import gymnasium as gym
+from gymnasium import spaces
 
 from actions import *
 from takeScreenShot import *
@@ -21,66 +21,95 @@ import numpy as np
 class BTDEnv(gym.Env):
     def __init__(self):
         super(BTDEnv, self).__init__()
-        # define observation and action space
-        self.action_type_space = spaces.MultiDiscrete([3, 1550, 920, 2, 100, 3]) # action, x, y, monkey, index, upgrade path
+        # define observation space
+        self.observation_space = spaces.Box(
+            low=np.zeros(103, dtype=np.float32),  
+            high=np.ones(103, dtype=np.float32),
+            shape=(3+100,),
+            dtype=np.float32
+        )
+        # define action space
+        self.action_space = spaces.MultiDiscrete([3, 1550, 920, 2, 100, 3]) # action, x, y, monkey, index, upgrade path
         self.state = None
+
+        # define other variables
         self.rounds = 0
         self.health = 0
         self.money = 0
 
-    def reset(self):
-        # returns the observation of the intial state
+    def reset(self, seed=None, options=None):
         # reset the environment
-        # round, money, previous moves
+        resetGame()
+        self.done = False
         self.rounds = int(scRound()[0])
         self.health = int(scLives())
         self.money = int(scMoney())
-        resetGame()
-        return self.state
+        nHealth = max(0, min(1, self.health / 150))  # value is between 0 and 1
+        nRounds = max(0, min(1, self.rounds / 100))  # value is between 0 and 1
+        log_money = np.log1p(max(0, self.money))  # money is non-negative
+        nMoney = max(0, min(1, log_money / 10000))  # value is between 0 and 1
+        self.prev_actions = deque(maxlen=100) # max rounds
+        for _ in range(100):
+            self.prev_actions.append(0)
+
+        self.observation = np.array([nHealth, nRounds, nMoney] + list(self.prev_actions), dtype=np.float32)
+        return self.observation, {}
 
     def step(self, action):
+        self.prev_actions.append(action)
         if self.check_done():
-            return False
-        self.rounds+=1
-        action_type = action[0] # What type of action
+            self.done = True
+            truncated = False 
+            return self.observation, self.calculate_reward(), self.done, truncated, {}
+
+        self.rounds += 1
+        action_type = action[0]  # What type of action
         # For buy
-        x = 50+action[1] # x coord
-        y = 80+action[2] # y coord
-        m = action[3] # monkey chosen to buy
+        x = 50 + action[1]  # x coord
+        y = 80 + action[2]  # y coord
+        m = action[3]  # Monkey chosen to buy
         # For upgrade
-        t = action[4] # used to get an index position of the current monkies
-        u = action[5] # used to select which upgrade to buy
+        t = action[4]  # Used to get an index position of the current monkeys
+        u = action[5]  # Used to select which upgrade to buy
         
-        if action_type == 0:
+        if action_type == 1:
             buy(x, y, monkey_dict[m])
-        elif action_type == 1:
-            upgrade(current_monkeys[t%len(current_monkeys)], u)
+        elif action_type == 2:
+            upgrade(current_monkeys[t % len(current_monkeys)], u)
         else:
             pass
-
-        reward = self.calculate_reward()
-        done = self.check_done()
-        return self.state, reward, done
+        
+        self.rounds = int(scRound()[0])
+        self.health = int(scLives())
+        self.money = int(scMoney())
+        nHealth = max(0, min(1, self.health / 150))  # value is between 0 and 1
+        nRounds = max(0, min(1, self.rounds / 100))  # value is between 0 and 1
+        log_money = np.log1p(max(0, self.money))  # money is non-negative
+        nMoney = max(0, min(1, log_money / 10000))  # value is between 0 and 1
+        
+        self.observation = np.array([nHealth, nRounds, nMoney] + list(self.prev_actions), dtype=np.float32)
+        self.reward = self.calculate_reward()
+        self.done = self.check_done()
+        truncated = False
+        return self.observation, self.reward, self.done, truncated, {}
 
     def calculate_reward(self):
-        nHealth = self.health / 150 # the 150 is max health
-        nRounds = self.rounds / 100 # ditto
+        nHealth = max(0, min(1, self.health / 150))  # value is between 0 and 1
+        nRounds = max(0, min(1, self.rounds / 100))  # value is between 0 and 1
         reward = nHealth + nRounds
-
-        if self.rounds < 90: # positive reward for more money in early rounds, negative reward for more money in later rounds
-            reward += self.money/10000
+        log_money = np.log1p(max(0, self.money))  # money is non-negative
+        nMoney = max(0, min(1, log_money / 10000))  # value is between 0 and 1
+        if self.rounds < 90:  # Positive reward for more money in early rounds, negative reward for more money in later rounds
+            reward += nMoney
         else:
-            reward -= self.money/10000
+            reward -= nMoney
+
+        reward = np.clip(reward, -np.inf, np.inf)
 
         return reward
 
     def check_done(self):
-        if not scDef():
-            return False
-        return True
-
-    def close(self):
-        pass
+        return self.health <= 0 or self.rounds >= 100
 
     def seed(self, seed=None):
         np.random.seed(seed)
