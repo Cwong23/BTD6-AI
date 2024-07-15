@@ -44,11 +44,11 @@ Inputs: None
 Outputs: Boolean
 Logic: Take a screenshot of a certain area. Compare that image to another image to see if the round if live or not. If the play button is on screen, the round is not live.
 '''
-def scCurrent():
+def scCurrent(): # returns false if the game is running
     pyautogui.screenshot('screenshots\screenshotCurrent.jpg', region=(1800, 970, 75, 50))
     return(open("screenshots\screenshotCurrent.jpg","rb").read() != open("screenshots\compareCurrent.jpg","rb").read())
 
-def scDef(): # returns false if the game is running
+def scDef(): 
     pyautogui.screenshot('screenshots\screenshotDefeat.jpg', region=(800, 775, 75, 75))
     return(open("screenshots\screenshotDefeat.jpg","rb").read() != open("screenshots\compareDefeat.jpg","rb").read())
 

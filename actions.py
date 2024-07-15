@@ -29,6 +29,7 @@ def buy(x: int, y: int, tower: Monkey) -> bool:
 
 def startRound():
     keyboard.press_and_release(' ')
+    pyautogui.sleep(1)
 
 def restart():
     pyautogui.click(850, 775)
