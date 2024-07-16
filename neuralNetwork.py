@@ -53,7 +53,7 @@ class BTDEnv(gym.Env):
         pyautogui.sleep(0.5)
         self.prev_actions.append(min(max(action[0] / 2.0, 0.0), 1.0))
         print(action)
-        if self.check_done():
+        if scCurrent():
             restart()
             self.done = True
             return self.observation, 0, self.done, False, {}
@@ -80,8 +80,8 @@ class BTDEnv(gym.Env):
 
         startRound()
         
-        print(self.check_done())
-        while self.check_done():
+        
+        while scCurrent():
             pyautogui.sleep(3)  # Adjust the sleep time as needed
         
         self.rounds = int(scRound()[0])
@@ -96,7 +96,7 @@ class BTDEnv(gym.Env):
         self.reward = self.calculate_reward()
         self.done = self.check_done()
         truncated = False  # This can be set based on additional logic if needed
-        return self.observation, self.reward, self.done, truncated, {}
+        return self.observation, self.reward, self.done, truncated, self.rounds
 
     def calculate_reward(self):
         nHealth = self.health / 150  # the 150 is max health
@@ -112,7 +112,7 @@ class BTDEnv(gym.Env):
         return reward
 
     def check_done(self):
-        return scCurrent()
+        return scDef()
 
     def seed(self, seed=None):
         np.random.seed(seed)
