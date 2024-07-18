@@ -17,3 +17,4 @@ https://pytorch.org/tutorials/beginner/basics/buildmodel_tutorial.html
 https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html 
 https://pythonprogramming.net/custom-environment-reinforcement-learning-stable-baselines-3-tutorial/
 https://www.youtube.com/watch?v=uKnjGn8fF70&t=900s&ab_channel=sentdex 
+https://www.youtube.com/watch?v=L8ypSXwyBds&t=3348s&ab_channel=freeCodeCamp.org 

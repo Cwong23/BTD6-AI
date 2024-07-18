@@ -2,8 +2,10 @@ import torch
 import random
 import numpy as np
 from collections import deque
-from neuralNetwork import BTDEnv
+from neuralNetwork import BTDEnv, Linear_QNet, QTrainer
 from actions import resetGame
+from helper import plot
+import keyboard
 
 MAX_MEMORY = 100_000
 BATCH_SIZE = 1000
@@ -13,10 +15,10 @@ class Agent:
     def __init__(self):
         self.n_games = 0
         self.epsilon = 0 # randomness
-        self.gamma = 0 # discount rate
+        self.gamma = 0.9 # discount rate
         self.memory = deque(maxlen=MAX_MEMORY) # popleft
-        self.model = None # TODO
-        self.trainer = None # TODO
+        self.model = Linear_QNet(103, 256, 3)
+        self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
 
     def get_state(self, game: BTDEnv):
         # implement state extraction logic
@@ -33,7 +35,7 @@ class Agent:
             mini_sample = self.memory
 
         states, actions, rewards, next_states, dones = zip(*mini_sample)
-        # self.trainer.train_step(states, actions, rewards, next_states, dones)
+        self.trainer.train_step(states, actions, rewards, next_states, dones)
 
 
     def train_short_memory(self, state, action, reward, next_state, done):
@@ -48,7 +50,7 @@ class Agent:
             final_move[move] = 1
         else:
             state0 = torch.tensor(state, dtype=torch.float)
-            prediction = self.model.predict(state0)
+            prediction = self.model(state0)
             move = torch.argmax(prediction).item()
             final_move[move] = 1
 
@@ -62,7 +64,19 @@ def train():
     record = 0
     agent = Agent()
     game = BTDEnv()
+    stop = False
+
+    def on_press_event(e):
+        nonlocal stop
+        if e.name == 'z':  # Change this to any key you want
+            stop = True
+            print("Stopping training...")
+
+    keyboard.on_press(on_press_event)
+
     while True:
+        if stop:
+            break
         # get old state
         state_old = agent.get_state(game)
 
@@ -88,11 +102,15 @@ def train():
 
             if score > record:
                 record = score
-                # agent.mode.save()
+                agent.mode.save()
 
             print('Game', agent.n_games, 'Score', score, 'Record', record)
 
-            
+            plot_scores.append(score)
+            total_score += score
+            mean_score = total_score/agent.n_games
+            plot_mean_scores.append(mean_score)
+            plot(plot_scores, plot_mean_scores)
 
 
 if __name__ == '__main__':
