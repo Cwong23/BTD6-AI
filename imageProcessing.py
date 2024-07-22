@@ -15,7 +15,7 @@ Notes: A majority of this code was taken from NeuralNine, I have attached the vi
 
 '''
 noise_removal(image)
-Puprose: Remove noise from an image
+Purpose: Remove noise from an image
 Inputs: An image
 Output: An image with noise removed
 Logic: Using cv2 functions, I am able to remove noise from the image
@@ -30,7 +30,7 @@ def noise_removal(image):
 
 '''
 processImage(process_This, numb)
-Puprose: Gather data from an image
+Purpose: Gather data from an image
 Inputs: An image, a string number corresponding to the image data
 Output: A string containing info from the image
 Logic:  Open the image and remove as much noise as possible by gray scaling and using the 'noise_removal(image)' function. 

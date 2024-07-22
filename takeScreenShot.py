@@ -32,7 +32,7 @@ def scRound():
     pyautogui.screenshot('screenshots\screenshotRound.jpg', region=(1420, 32, 140, 50))
     x = processImage('screenshots\screenshotRound.jpg', "3").split('/')
     if x[0] == '':
-        return ['-1']
+        return ['-1'] 
     return x
 
 
@@ -50,9 +50,12 @@ def scCurrent(): # returns false if the game is running
 
 def scDef(): 
     pyautogui.screenshot('screenshots\screenshotDefeat.jpg', region=(800, 775, 75, 75))
-    return(open("screenshots\screenshotDefeat.jpg","rb").read() != open("screenshots\compareDefeat.jpg","rb").read())
+    return(open("screenshots\screenshotDefeat.jpg","rb").read() == open("screenshots\compareDefeat.jpg","rb").read())
 
 def scWin():
     pyautogui.screenshot('screenshots\screenshotWin.jpg', region=(700, 165, 300, 50))
     return(open("screenshots\screenshotWin.jpg","rb").read() != open("screenshots\compareWin.jpg","rb").read())
 
+def scFast(): # returns false if the game is running
+    pyautogui.screenshot('screenshots\screenshotFastForward.jpg', region=(1800, 970, 75, 50))
+    return(open("screenshots\screenshotFastForward.jpg","rb").read() == open("screenshots\compareFastForward.jpg","rb").read())

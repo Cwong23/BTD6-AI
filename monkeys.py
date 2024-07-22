@@ -40,6 +40,7 @@ class PlacedMonkey:
         rStr = self.monkey.name + " X: " + str(self.x) + " Y: " + str(self.y) + " Upgrades: " + str(self.currentUpgrade[0]) + str(self.currentUpgrade[1]) + str(self.currentUpgrade[2])
         return rStr
 
+# Currently configured for Easy Mode
 monkey_dict = {
     0: Monkey("ninja", 340, 'd', [295, 295, 720, 2335, 29750, 295, 425, 765, 4420, 18700, 210, 340, 2335, 3825, 34000]),
     1: Monkey("bomb", 445, 'e', [295, 550, 1020, 3060, 46750, 210, 340, 930, 2720, 21250, 170, 255, 680, 2380, 29750])
