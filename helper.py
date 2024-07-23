@@ -1,9 +1,22 @@
 import matplotlib.pyplot as plt
 from IPython import display
 
+'''
+Notes: This code was from freeCodeCamp's video on Snake RL. 
+'''
+
+'''
+plot(scores: list, mean_scores: list) -> None
+Purpose: Plot the scores of the games
+Inputs: list, list
+Outputs: None
+Logic: Labels and plots the scores according to the given lists. This shows the score of the last game and the mean score. The score is the
+       blue line and the mean score is the orange line.
+'''
+
 plt.ion()
 
-def plot(scores, mean_scores):
+def plot(scores: list, mean_scores: list) -> None:
     display.clear_output(wait=True)
     display.display(plt.gcf())
     plt.clf()

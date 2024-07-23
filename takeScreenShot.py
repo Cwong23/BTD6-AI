@@ -48,14 +48,14 @@ def scCurrent(): # returns false if the game is running
     pyautogui.screenshot('screenshots\screenshotCurrent.jpg', region=(1800, 970, 75, 50))
     return(open("screenshots\screenshotCurrent.jpg","rb").read() != open("screenshots\compareCurrent.jpg","rb").read())
 
-def scDef(): 
+def scDef(): # returns true if the game has ended in defeat
     pyautogui.screenshot('screenshots\screenshotDefeat.jpg', region=(800, 775, 75, 75))
     return(open("screenshots\screenshotDefeat.jpg","rb").read() == open("screenshots\compareDefeat.jpg","rb").read())
 
-def scWin():
+def scWin(): # returns false if the game is not won
     pyautogui.screenshot('screenshots\screenshotWin.jpg', region=(700, 165, 300, 50))
     return(open("screenshots\screenshotWin.jpg","rb").read() != open("screenshots\compareWin.jpg","rb").read())
 
-def scFast(): # returns false if the game is running
+def scFast(): # returns true if the game is fast forwarded
     pyautogui.screenshot('screenshots\screenshotFastForward.jpg', region=(1800, 970, 75, 50))
     return(open("screenshots\screenshotFastForward.jpg","rb").read() == open("screenshots\compareFastForward.jpg","rb").read())
