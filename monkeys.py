@@ -49,13 +49,17 @@ class PlacedMonkey:
                 pathCheck+=1
             
             if x >= 3 and i != upgradePath: # checks for a path that has more than 3 but not the intended upgrade path
+                print("Conflicting 3rd degree paths")
                 return False
        
         if (self.currentUpgrade[upgradePath] == 0) and (pathCheck == 2): # checks if the other paths were opened already
+            print("Conflicting paths")
             return False
         
         # money check
+        print(self.monkey.upgrades[(upgradePath*5)+self.currentUpgrade[upgradePath]])
         if(self.monkey.upgrades[(upgradePath*5)+self.currentUpgrade[upgradePath]] > money): 
+            print("Not enough funds")
             return False
         
         print("Cost: " + str(self.monkey.upgrades[(upgradePath*5)+self.currentUpgrade[upgradePath]]))

@@ -61,6 +61,7 @@ class BTDEnv(gym.Env):
     def reset(self, seed=None, options=None):
         # Reset the environment
         resetGame()
+        current_monkeys.clear()
         self.done = False
         pyautogui.sleep(0.5)
         self.rounds = scRound()[0]
@@ -105,6 +106,8 @@ class BTDEnv(gym.Env):
             pyautogui.sleep(0.5)
         elif action_type == 2: # upgrade
             if len(current_monkeys) != 0:
+                print("Current monkies: ", current_monkeys)
+                print("Monkey Chosen: ", current_monkeys[t % len(current_monkeys)])
                 upgrade(current_monkeys[t % len(current_monkeys)], u)
             pyautogui.sleep(0.5)
         else: # other

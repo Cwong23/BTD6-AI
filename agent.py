@@ -9,7 +9,7 @@ import keyboard
 import pyautogui
 from takeScreenShot import scRound
 import matplotlib.pyplot as plt
-
+from monkeys import current_monkeys
 '''
 Notes: Most of this code was from freeCodeCamp's video on Snake RL, but I modified it to fit the correct requirements of my env.
 '''
@@ -179,6 +179,7 @@ def train() -> None:
         if done:
             # train long memory
             restart()
+            current_monkeys.clear()
             pyautogui.sleep(1)
             agent.n_games += 1
             agent.train_long_memory()

@@ -28,11 +28,12 @@ def buy(x: int, y: int, tower: Monkey) -> bool:
         
         if(scMoney() == money): # checks money
             resetGame() # buy was unsuccessful
+            print("Buy was unsuccessful")
             return False
         resetGame() # reset the position of mouse and any open screens
         temp = PlacedMonkey(tower, x, y) # add to the list
         current_monkeys.append(temp)
-        
+        print("Buy was successful")
         
         return True
     except:
@@ -106,11 +107,14 @@ def upgrade(tower: PlacedMonkey, upgrade: int) -> bool:
                 if(money2 != ""):
                     if(int(money2) == money):
                         resetGame()
+                        print("Upgrade was unsuccessful")
                         return False
                     resetGame() # if it is successful, then the tower will have it's upgrade paths updated
                     tower.currentUpgrade[upgrade]+=1
+                    print("Upgrade was successful")
                     return True 
-                print("failed to read money")
+                print("Failed to read money")
+        print("Not enough funds to upgrade")
         resetGame()
         return False
     except:
