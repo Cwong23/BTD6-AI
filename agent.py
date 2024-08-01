@@ -153,6 +153,7 @@ def train() -> None:
     fig, ax = plt.subplots()
     mng = plt.get_current_fig_manager()
     mng.window.wm_geometry("-1100+700")
+    pyautogui.click(1400, 680)
     resetGame()
 
     # infinite loop
