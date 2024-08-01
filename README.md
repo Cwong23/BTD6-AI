@@ -17,15 +17,15 @@ Hello, this is my first 'real' CS project. I will try to update this and add mor
 ### Libraries and Versions
 Python 3.12.0
 
-PyTorch 2.3.1
-matplotlib 3.9.1
-gym 0.26.2
-numpy 2.0.0
-opencv-python 4.10.0.84
-keyboard -.13.5
-PyAutoGUI 0.9.54
-pytesseract 0.3.10
-IPython 8.26.0
+-PyTorch 2.3.1
+-matplotlib 3.9.1
+-gym 0.26.2
+-numpy 2.0.0
+-opencv-python 4.10.0.84
+-keyboard -.13.5
+-PyAutoGUI 0.9.54
+-pytesseract 0.3.10
+-IPython 8.26.0
 
 To install a package
 ```
