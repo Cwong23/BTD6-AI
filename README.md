@@ -22,7 +22,7 @@ Python 3.12.0
 - gym 0.26.2
 - numpy 2.0.0
 - opencv-python 4.10.0.84
-- keyboard -.13.5
+- keyboard 0.13.5
 - PyAutoGUI 0.9.54
 - pytesseract 0.3.10
 - IPython 8.26.0

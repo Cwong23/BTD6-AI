@@ -1,5 +1,5 @@
 import tkinter as tk
-from randomAction import *
+from testing.randomAction import *
 from takeScreenShot import *
 
 class GUIApp:

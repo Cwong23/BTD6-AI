@@ -2,6 +2,10 @@ import random
 from actions import *
 from monkeys import *
 
+'''
+Used to test the actions.py file
+'''
+
 def randomAction(money):
     x = random.randint(1,2)
     y = random.randint(1,2)
