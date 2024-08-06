@@ -4,7 +4,7 @@ Purpose: Use AI to beat the video game Bloons Tower Defense 6.
 ![plot](./screenshots/BTD6.JPG)
 
 ### Info
-Author: Christopher Wong ( linkedin.com/in/christopher-wong-433559216 )
+Author: Christopher Wong ( https://www.linkedin.com/in/christopher-wong-433559216 )
 
 Last Update Date: 7/30/24
 
